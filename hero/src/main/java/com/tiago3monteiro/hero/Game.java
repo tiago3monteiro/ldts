@@ -35,9 +35,35 @@ public class Game {
     }
 
     public void run() throws IOException {
-            this.draw();
+            while(true)
+            {
+                this.draw();
+                KeyStroke key = screen.readInput();
+                processKey(key);
+                if(key.getKeyType() == KeyType.EOF) break;
+            }
 
         }
+    private void processKey(KeyStroke key) throws IOException
+    {
+        switch(key.getKeyType())
+        {
+            case ArrowUp -> y--;
+            case ArrowDown -> y++;
+            case ArrowRight -> x++;
+            case ArrowLeft -> x--;
+            case Character ->
+            {
+                if(key.getCharacter() == 'q')
+                {
+                    screen.close();
+                }
+
+            }
+
+        }
+
     }
+}
 
 

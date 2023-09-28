@@ -3,7 +3,7 @@ plugins {
     id("application")
 }
 
-group = "org.example"
+group = "com.tiago3monteiro.hero"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -13,7 +13,8 @@ repositories {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation(group= "com.googlecode.lanterna", name= "lanterna", version="3.1.1")
+    implementation group: 'com.googlecode.lanterna', name:
+    'lanterna', version: '3.1.1'
 }
 
 tasks.test {
@@ -21,5 +22,5 @@ tasks.test {
 }
 
 application {
-    mainClass.set("Application")
+    mainClass.set("com.tiago3monteiro.hero.Application")
 }

@@ -9,8 +9,12 @@ import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.KeyStroke;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Game {
+    private Screen screen;
+    private Arena arena;
+
     public Game() throws IOException {
         TerminalSize terminalSize = new TerminalSize(40, 20);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
@@ -19,13 +23,12 @@ public class Game {
         screen.setCursorPosition(null);
         screen.startScreen();
         screen.doResizeIfNecessary();
-        hero = new Hero(new Position(10,10));
-
+        arena = new Arena(20,20);
     }
 
     private void draw() throws IOException {
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen);
         screen.refresh();
     }
 
@@ -37,26 +40,21 @@ public class Game {
                 processKey(key);
                 if(key.getKeyType() == KeyType.EOF) break;
             }
-
         }
+
     private void processKey(KeyStroke key) throws IOException
     {
-        switch(key.getKeyType())
-        {
-            case ArrowUp -> moveHero(hero.moveUp());
-            case ArrowDown -> moveHero(hero.moveDown());
-            case ArrowRight -> moveHero(hero.moveRight());
-            case ArrowLeft -> moveHero(hero.moveLeft());
-            case Character -> { if(key.getCharacter() == 'q')  {screen.close();}}
+        if (Objects.requireNonNull(key.getKeyType()) == KeyType.Character) {
+            if (key.getCharacter() == 'q') {
+                screen.close();
+            }
+        } else {
+            arena.processKey(key);
         }
-    }
 
-    private void moveHero(Position position) {
-        hero.setPosition(position);
-    }
 
-    private Screen screen;
-    private Hero hero;
+
+    }
 }
 
 

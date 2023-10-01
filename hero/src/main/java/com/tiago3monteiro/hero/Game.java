@@ -19,7 +19,7 @@ public class Game {
         screen.setCursorPosition(null);
         screen.startScreen();
         screen.doResizeIfNecessary();
-        hero = new Hero(10, 10);
+        hero = new Hero(new Position(10,10));
 
     }
 
@@ -43,22 +43,18 @@ public class Game {
     {
         switch(key.getKeyType())
         {
-            case ArrowUp -> hero.moveUp();
-            case ArrowDown -> hero.moveDown();
-            case ArrowRight -> hero.moveRight();
-            case ArrowLeft -> hero.moveLeft();
-            case Character ->
-            {
-                if(key.getCharacter() == 'q')
-                {
-                    screen.close();
-                }
-
-            }
-
+            case ArrowUp -> moveHero(hero.moveUp());
+            case ArrowDown -> moveHero(hero.moveDown());
+            case ArrowRight -> moveHero(hero.moveRight());
+            case ArrowLeft -> moveHero(hero.moveLeft());
+            case Character -> { if(key.getCharacter() == 'q')  {screen.close();}}
         }
-
     }
+
+    private void moveHero(Position position) {
+        hero.setPosition(position);
+    }
+
     private Screen screen;
     private Hero hero;
 }

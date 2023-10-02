@@ -1,5 +1,9 @@
 package com.tiago3monteiro.hero;
 
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 
@@ -9,7 +13,6 @@ public class Arena {
     private int width;
     private int height;
     private Hero hero;
-    private Screen screen;
 
     public Arena(int width, int height)
     {
@@ -18,8 +21,12 @@ public class Arena {
         this.height = height;
     }
 
-    public void draw(Screen screen) throws IOException {
-        hero.draw(screen);
+    public void draw(TextGraphics graphics ) throws IOException {
+
+        graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
+        graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
+        hero.draw(graphics);
+
     }
 
     public void processKey(KeyStroke key) throws IOException {
@@ -36,12 +43,10 @@ public class Arena {
         if (canHeroMove(position))
             hero.setPosition(position);
     }
+
     private boolean canHeroMove(Position position) {
         int x = position.getX();
         int y = position.getY();
         return (x >= 0 && x < this.height) && (y >= 0 && y < this.width);
     }
-
-
-
 }

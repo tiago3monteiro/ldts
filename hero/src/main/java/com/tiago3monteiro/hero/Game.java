@@ -14,18 +14,16 @@ import java.util.Objects;
 
 public class Game {
     private Screen screen;
-    private Arena arena;
+    private Arena arena = new Arena(20,20);
 
     public Game() throws IOException {
-        TerminalSize terminalSize = new TerminalSize(40, 20);
+        TerminalSize terminalSize = new TerminalSize(40, 40);
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory().setInitialTerminalSize(terminalSize);
         Terminal terminal = new DefaultTerminalFactory().createTerminal();
         screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);
         screen.startScreen();
         screen.doResizeIfNecessary();
-        arena = new Arena(20,15);
-        TextGraphics graphics = screen.newTextGraphics();
     }
 
     private void draw() throws IOException {

@@ -28,7 +28,7 @@ public class Game {
 
     private void draw() throws IOException {
         screen.clear();
-        arena.draw(screen.newTextGraphics());
+        arena.draw(screen);
         screen.refresh();
     }
 
@@ -37,24 +37,13 @@ public class Game {
             {
                 this.draw();
                 KeyStroke key = screen.readInput();
-                processKey(key);
+                arena.processKey(key);
+                if(arena.endGame()) screen.close();
                 if(key.getKeyType() == KeyType.EOF) break;
             }
         }
 
-    private void processKey(KeyStroke key) throws IOException
-    {
-        if (Objects.requireNonNull(key.getKeyType()) == KeyType.Character) {
-            if (key.getCharacter() == 'q') {
-                screen.close();
-            }
-        } else {
-            arena.processKey(key);
-        }
 
-
-
-    }
 }
 
 

@@ -16,31 +16,29 @@ public class Arena {
     private int width;
     private int height;
     private Hero hero;
-    private List <Wall> walls;
-    private List <Coin> coins;
+    private List<Wall> walls;
+    private List<Coin> coins;
 
-    public Arena(int width, int height)
-    {
-        hero = new Hero(new Position(10,10));
+    public Arena(int width, int height) {
+        hero = new Hero(new Position(10, 10));
         this.width = width;
         this.height = height;
         this.walls = createWalls();
         this.coins = createCoins();
     }
 
-    public void draw(TextGraphics graphics ) throws IOException {
+    public void draw(TextGraphics graphics) throws IOException {
 
         graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
         for (Wall wall : walls) wall.draw(graphics);
-        for (Coin coin: coins) coin.draw(graphics);
+        for (Coin coin : coins) coin.draw(graphics);
         hero.draw(graphics);
 
     }
 
     public void processKey(KeyStroke key) throws IOException {
-        switch(key.getKeyType())
-        {
+        switch (key.getKeyType()) {
             case ArrowUp -> moveHero(hero.moveUp());
             case ArrowDown -> moveHero(hero.moveDown());
             case ArrowRight -> moveHero(hero.moveRight());
@@ -51,23 +49,25 @@ public class Arena {
     public void moveHero(Position position) {
         if (canHeroMove(position))
             hero.setPosition(position);
+        retrieveCoins();
+
     }
 
     private boolean canHeroMove(Position position) {
         int x = position.getX();
         int y = position.getY();
-        return (x > 0 && x < this.height-1) && (y > 0 && y < this.width-1);
+        return (x > 0 && x < this.height - 1) && (y > 0 && y < this.width - 1);
     }
 
     private List<Wall> createWalls() {
         List<Wall> walls = new ArrayList<>();
         for (int c = 0; c < width; c++) {
-            walls.add(new Wall (c, 0));
-            walls.add(new Wall (c, height - 1));
+            walls.add(new Wall(c, 0));
+            walls.add(new Wall(c, height - 1));
         }
         for (int r = 1; r < height - 1; r++) {
-            walls.add(new Wall (0, r));
-            walls.add(new Wall (width - 1, r));
+            walls.add(new Wall(0, r));
+            walls.add(new Wall(width - 1, r));
         }
         return walls;
     }
@@ -81,5 +81,13 @@ public class Arena {
         return coins;
     }
 
+    private void retrieveCoins() {
+        for (Coin coin : coins) {
+            if (coin.equals(hero.position)) {
+                coins.remove(coin);
+                break;
+            }
 
+        }
+    }
 }

@@ -13,6 +13,10 @@ public abstract class Element {
     public void setPosition(Position position)
     {
         this.position = position;
+    }
+    public boolean equals(Position position)
+    {
+        return (this.position.getX() == position.getX() && this.position.getY() == position.getY());
 
     }
 }

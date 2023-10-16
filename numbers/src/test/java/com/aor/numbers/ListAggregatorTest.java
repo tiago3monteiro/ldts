@@ -25,6 +25,21 @@ public class ListAggregatorTest {
     }
 
     @Test
+    public void max_bug_7263() {
+        ListAggregator aggregator = new ListAggregator();
+        int max = aggregator.max(Arrays.asList(-1, -4, -5));
+        Assertions.assertEquals(-1, max);
+    }
+
+    public Integer max(List<Integer> list) {
+        // int max = 0;
+        int max = Integer.MIN_VALUE;
+        for (Integer number : list)
+            if (number > max)
+                max = number;
+        return max;
+    }
+    @Test
     public void max() {
 
         ListAggregator aggregator = new ListAggregator();

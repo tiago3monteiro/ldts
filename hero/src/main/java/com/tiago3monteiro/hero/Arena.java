@@ -27,7 +27,6 @@ public class Arena {
         hero = new Hero(new Position(10, 10));
         this.width = width;
         this.height = height;
-        this.screen = screen;
         this.walls = createWalls();
         this.coins = createCoins();
         this.monsters = createMonsters();

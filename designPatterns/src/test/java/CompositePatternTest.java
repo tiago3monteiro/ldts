@@ -6,7 +6,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StringTransformerGroupTest {
+public class CompositePatternTest
+{
     @Test
     public void transformerGroup() {
         StringDrink drink = new StringDrink( "AbCd-aBcD");
@@ -42,4 +43,5 @@ public class StringTransformerGroupTest {
         recipe.mix(drink);
         assertEquals("DcBx-dCbA", drink.getText());
     }
+
 }
